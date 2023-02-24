@@ -1,0 +1,26 @@
+{
+  "name": "exchange-rates",
+  "version": "1.0.0",
+  "description": "Exchange rate API",
+  "main": "index.html",
+  "scripts": {
+    "empezar": "http-server",
+    "cypress-run": "cypress run",
+    "cypress-dev": "cypress open",
+    "test": "run-p start cypress-run",
+    "test-dev": "run-p start cypress-dev"
+  },
+  "author": "Nullim",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "jquery": "^3.6.3"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.16",
+    "cypress": "^12.6.0",
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5"
+  }
+}

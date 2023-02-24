@@ -1,0 +1,27 @@
+.hidden {
+    display: none;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+ul{
+    display: inline-block;
+    text-align: left;
+}
+
+.row-centered{
+    width: 40%;
+    float: none;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.error{
+    border: 2px solid red;
+}
+
+.error1{
+    border: 2px solid red;
+}
