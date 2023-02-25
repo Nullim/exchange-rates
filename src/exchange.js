@@ -46,12 +46,15 @@ $baseCurrency.oninput = () => {
 
 function validateCurrencyInput() {
   const baseCurrency = String($baseCurrency.value).toUpperCase();
+  $loadingMessage.classList.remove('hidden');
   return fetch('https://api.exchangerate.host/symbols')
     .then((response) => response.json())
     .then((data) => {
       if (baseCurrency in data.symbols) {
+        $loadingMessage.classList.add('hidden');
         return '';
       }
+      $loadingMessage.classList.add('hidden');
       return 'Please insert a valid currency.';
     })
     .catch((error) => {
@@ -122,7 +125,7 @@ $confirm.onclick = async () => {
 
   validationResults = validationResults.concat(userCurrencyAmount);
 
-  if (validationResults.length >= 1) {
+  if (!validationResults.every((result) => result === '')) {
     const errors = {
       errorAmount: validationResults,
     };
@@ -169,7 +172,7 @@ $confirm.onclick = async () => {
 
 function configureInputDate() {
   const today = (new Date()).toISOString().split('T')[0];
-  const minDate = new Date('2000-01-02').toISOString().split('T')[0];
+  const minDate = new Date('2000-01-01').toISOString().split('T')[0];
   $userDate.setAttribute('max', today);
   $userDate.setAttribute('min', minDate);
   $userDate.value = today;
