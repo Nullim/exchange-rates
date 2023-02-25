@@ -122,7 +122,7 @@ $confirm.onclick = async () => {
 
   validationResults = validationResults.concat(userCurrencyAmount);
 
-  if (validationResults.length > 1) {
+  if (validationResults.length >= 1) {
     const errors = {
       errorAmount: validationResults,
     };
