@@ -14,6 +14,14 @@ const $results = document.querySelector('#results');
 const $errors = document.querySelector('#errors');
 const baseURL = 'https://api.exchangerate.host';
 
+class Currency {
+  constructor(base, date, rates) {
+    this.base = base;
+    this.date = date;
+    this.rates = rates;
+  }
+}
+
 $confirm.setAttribute('disabled', true);
 
 $latestRatesCheck.onclick = () => {
@@ -27,7 +35,10 @@ $latestRatesCheck.onclick = () => {
 function obtainExchanges(base = 'EUR', date = 'latest') {
   return fetch(`${baseURL}/${date}?base=${base}`)
     .then((r) => r.json())
-    .then((r) => r.rates);
+    .then((data) => {
+      const currency = new Currency(base, date, data.rates);
+      return currency;
+    });
 }
 
 function deleteAllLists(element) {
@@ -141,21 +152,21 @@ $confirm.onclick = async () => {
 
     $loadingMessage.classList.remove('hidden');
 
-    obtainExchanges(baseCurrency, userDate).then((rates) => {
+    obtainExchanges(baseCurrency, userDate).then((currency) => {
       $loadingMessage.classList.add('hidden');
       $results.classList.remove('hidden', 'invisible');
       $currencyList.innerHTML = 'Currency list:';
       $exchangeRates.innerHTML = 'Exchange rates:';
 
-      Object.keys(rates).forEach((currency) => {
-        let exchangeRate = rates[currency];
+      Object.keys(currency.rates).forEach((base) => {
+        let exchangeRate = currency.rates[base];
         const currencyEl = document.createElement('p');
         const exchangeRateEl = document.createElement('p');
         if ($userAmount.value > 1) {
           exchangeRate *= $userAmount.value;
           exchangeRate = parseFloat(exchangeRate.toFixed(2));
         }
-        currencyEl.textContent = currency;
+        currencyEl.textContent = base;
         exchangeRateEl.textContent = exchangeRate;
         currencyEl.classList.add('border', 'border-primary');
         exchangeRateEl.classList.add('border', 'border-primary');
